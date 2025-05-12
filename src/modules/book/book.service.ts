@@ -91,7 +91,7 @@ class BookService {
   };
 
   // Get a single book by ID with genres
-  getBook = async (id: string): Promise<Book & { genres: Genre[] } | null> => {
+  getBook = async (id: string): Promise<Book & { genres: String[] } | null> => {
     const book = await this.prisma.book.findUnique({
       where: { id },
       include: {
@@ -108,7 +108,7 @@ class BookService {
     // Transform genres to return only the genre details
     return {
       ...book,
-      genres: book.genres.map((bg) => bg.genre),
+      genres: book.genres.map((bg) => bg.genre.name),
     };
   };
 

@@ -10,5 +10,26 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - '5432:5432'
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: express-ts-app
+    ports:
+      - '3000:3000'
+    environment:
+      DATABASE_URL: "postgresql://user:temp123@postgres:5432/mydb"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: >
+      sh -c "
+      npx prisma migrate deploy &&
+      npm run dev
+      "
+    depends_on:
+      - postgres
+
 volumes:
   postgres:
