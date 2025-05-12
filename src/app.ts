@@ -3,6 +3,8 @@ import cors from 'cors';
 import compression from 'compression';
 import httpStatus from 'http-status';
 import express from "express";
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swagger';
 
 import xss from './middlewares/xss';
 import rateLimiter from './middlewares/rateLimiter';
@@ -36,6 +38,7 @@ app.get('/health', (req, res) => {
 
 // Module routes
 setupRoutes(app); 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Handle 404 errors
 app.use((req, res) => {

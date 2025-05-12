@@ -46,7 +46,7 @@ class BookService {
     search?: string,
     page?: number,
     limit?: number
-  ): Promise<{ books: (Book & { genres: string[] })[]; total: number }> => {
+  ): Promise<{ books: (Book & { genres: string[] })[]; totalBooks: number, totalPages: number, page: number | undefined}> => {
     const skip = page && limit ? (page - 1) * limit : undefined;
     const take = limit || undefined;
 
@@ -67,7 +67,8 @@ class BookService {
       ];
     }
 
-    const total = await this.prisma.book.count({ where: prismaFilters });
+    const totalBooks = await this.prisma.book.count({ where: prismaFilters });
+    const totalPages = Math.ceil(totalBooks / (limit || 10));
     const books = await this.prisma.book.findMany({
       where: prismaFilters,
       skip,
@@ -86,7 +87,7 @@ class BookService {
       genres: book.genres.map((bg) => bg.genre.name),
     }));
 
-    return { books: booksWithGenres, total };
+    return { page, totalPages, totalBooks, books: booksWithGenres };
   };
 
   // Get a single book by ID with genres
