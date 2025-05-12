@@ -30,8 +30,8 @@ app.use(cors());
 app.use(compression());
 
 // Example routes
-app.get('/', (req, res) => {
-  res.send({ message: 'Hello World!' });
+app.get('/health', (req, res) => {
+  res.send({ status: 'ok' });
 });
 
 // Module routes
