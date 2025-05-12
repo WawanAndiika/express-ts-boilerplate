@@ -1,0 +1,4 @@
+2025-05-12 18:10:40 [ERROR]: Database `mydb` does not exist
+2025-05-12 18:10:55 [ERROR]: Database `mydb` does not exist
+2025-05-12 18:12:11 [INFO]: Connected to SQL Databases
+2025-05-12 18:12:11 [INFO]: Listening to port 3000
